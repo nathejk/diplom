@@ -38,13 +38,6 @@ func (app *application) pdfHandler(w http.ResponseWriter, r *http.Request) {
 		Destination: "Glumsø",
 		Background:  "/app/assets/Diplom2024_patrulje.png",
 	}
-	//loc, _ := time.LoadLocation("Europe/Copenhagen")
-	/*team := Team{
-		Name:   "Skovskiderne",
-		Number: "123-4",
-		//FinishedAt: time.Now().In(loc),
-		PhotoUrl: "https://natpas.nathejk.dk/photo.image.php?id=1688",
-	}*/
 	team, err := app.models.Teams.GetPatruljeByYearAndNumber("2024", teamNumber)
 	if err != nil {
 		switch {
@@ -65,7 +58,8 @@ func (app *application) pdfHandler(w http.ResponseWriter, r *http.Request) {
 	checkpoint, _ := app.models.Checkpoint.GetLastCheckpoint("2024")
 	var finishedAt time.Time
 	if scan, err := app.models.Scan.GetByTeamIDAndCheckpoint(team.ID, checkpoint.GroupID); err == nil {
-		finishedAt = time.Unix(scan.Uts, 0)
+		loc, _ := time.LoadLocation("Europe/Copenhagen")
+		finishedAt = time.Unix(scan.Uts, 0).In(loc)
 	}
 	pdf := fpdf.New("P", "mm", "A4", "/")
 	pdf.AddPage()
