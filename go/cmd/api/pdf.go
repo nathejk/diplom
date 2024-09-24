@@ -56,6 +56,12 @@ func (app *application) pdfHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	photoUrl := fmt.Sprintf("https://natpas.nathejk.dk/photo.image.php?id=%s", team.PhotoID)
+	switch teamNumber {
+	case "81":
+		photoUrl = "/app/assets/Team-81-3_1_XXX.jpg"
+	case "107":
+		photoUrl = "/app/assets/Team-107-5_1_XXX.jpg"
+	}
 	checkpoint, _ := app.models.Checkpoint.GetLastCheckpoint("2024")
 	var finishedAt time.Time
 	if scan, err := app.models.Scan.GetByTeamIDAndCheckpoint(team.ID, checkpoint.GroupID); err == nil {
@@ -74,7 +80,9 @@ func (app *application) pdfHandler(w http.ResponseWriter, r *http.Request) {
 	pdf.MultiCell(0, 10, team.Name, "", "C", false)
 
 	if team.PhotoID != "" {
-		httpimg.Register(pdf, photoUrl, "")
+		if photoUrl[0:4] == "http" {
+			httpimg.Register(pdf, photoUrl, "")
+		}
 		pdf.Image(photoUrl, 55, 130, 100, 75, false, "", 0, "")
 	}
 	pdf.SetXY(65, 220)
