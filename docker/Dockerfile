@@ -61,6 +61,8 @@ RUN set -eux; \
 
 WORKDIR /app
 COPY --from=build /app/api /diplom-api
+COPY go/public /app/public
+COPY go/assets /app/assets
 COPY docker/bin/init /init
 
 #HEALTHCHECK --interval=30s --timeout=15s --start-period=900s --retries=3 CMD test -f /tmp/healthy
