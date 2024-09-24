@@ -42,36 +42,6 @@ RUN go test -timeout 60s ./... && \
 RUN GOARCH=amd64 CGO_ENABLED=1 GOOS=linux \
 	go build -a -ldflags '-extldflags "-static"' -ldflags="-w -s" -o api nathejk.dk/cmd/api
 
-## UI
-FROM node:20.11.1-alpine3.19 AS ui-dev
-
-RUN mkdir -p /app
-WORKDIR /app
-COPY vue /app
-
-RUN npm install -g npm@7.24.0
-
-# python is a dependency of node-gyp that we need to build node-sass https://www.npmjs.com/package/node-gyp
-#RUN apk add g++ make python3 && \
-#    npm config set python "$(which python3)"
-
-#RUN npm install
-COPY docker/init/ui-dev /init
-
-ENTRYPOINT ["/init"]
-
-#FROM node:10.11-alpine AS ui-builder
-FROM ui-dev AS ui-builder
-
-#npm ci # installs what is specified in package-lock.json
-RUN npm ci --no-save
-#COPY ui/yarn.lock /app/
-
-#RUN yarn install --frozen-lockfile
-
-#RUN npm test
-RUN npm run build
-
 
 #
 # PROD
@@ -90,11 +60,10 @@ RUN set -eux; \
 	rm -rf /tmp/* /var/cache/apk/*
 
 WORKDIR /app
-COPY --from=build /app/api /tilmelding-api
-COPY --from=ui-builder /app/dist /www
+COPY --from=build /app/api /diplom-api
 COPY docker/bin/init /init
 
 #HEALTHCHECK --interval=30s --timeout=15s --start-period=900s --retries=3 CMD test -f /tmp/healthy
 EXPOSE 80
 ENTRYPOINT ["/init"]
-CMD ["/tilmelding-api"]
+CMD ["/diplom-api"]
