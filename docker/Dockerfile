@@ -56,6 +56,7 @@ RUN set -eux; \
 	    coreutils \
 	    libc6-compat \
 	    ca-certificates \
+        tzdata \
         && \
 	rm -rf /tmp/* /var/cache/apk/*
 
