@@ -1,0 +1,67 @@
+volumes:
+  ui-node_modules:
+  api:
+
+networks:
+  local:
+  traefik:
+    external: true
+
+services:
+  gw:
+    image: jrgensen/gateway
+    platform: linux/x86_64
+    environment:
+      PROXY_MAPPINGS: >
+        diplom:api
+        sql:phpmyadmin
+    networks:
+    - local
+    - traefik
+    labels:
+      traefik.enable: true
+      traefik.docker.network: traefik
+      traefik.http.routers.diplom.rule: Host(`diplom.dev.nathejk.dk`) || HostRegexp(`.+\.diplom\.dev\.nathejk\.dk`)
+
+  api:
+    build:
+      context: .
+      target: base
+      dockerfile: docker/Dockerfile
+    environment:
+      JETSTREAM_DSN: nats://dev.nathejk.dk:4222
+      STAN_DSN: stan://dev.nathejk.dk:4222/nathejk
+      DB_DSN: bruger:kodeord@tcp(db:3306)/diplom?parseTime=true
+      #GO_BUILD_FLAGS: -race
+    volumes:
+    - ./go:/app
+    - api:/go
+    depends_on:
+    - gw
+    - db
+    networks:
+    - local
+
+  db:
+    image: mariadb:10.8
+    environment:
+      MYSQL_ROOT_PASSWORD: ib
+      MYSQL_DATABASE: diplom
+      MYSQL_USER: bruger
+      MYSQL_PASSWORD: kodeord
+      TZ: Europe/Copenhagen
+    networks:
+    - local
+
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ib
+      PMA_USER: bruger
+      PMA_PASSWORD: kodeord
+    depends_on:
+    - gw
+    networks:
+    - local
+

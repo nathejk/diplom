@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8">
+    <title>Nathejk 2024</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="/assets/main.css" rel="stylesheet">
+    <link href="/vendor/ekko-lightbox.min.css" rel="stylesheet">
+ 
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="/vendor/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/vendor/ekko-lightbox.min.js"></script>
+    <script type="text/javascript" src="/vendor/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/vendor/bootstrap-datepicker.js"></script>
+    
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link href="http://nathejk.dk/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  </head>
+
+  
+  <body>
+
+    
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#" style="background:url(/assets/logomoonsmall.png) no-repeat; padding-left:60px;">Nathejk 2024</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+
+    
+    <div class="container">
+      <div class="page-header">
+        <h1>Diplom <small>find dit eget</small></h1>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <p class="lead">Få jeres eget Nathejk 2024-diplom. Bare indtast jeres patruljenummer og klik på "find" - så åbner jeres diplom, som er lige til at printe ud og hænge op i jeres spejderhytte!</p>
+            <form class="form-inline" action="" method="get" onsubmit="location.href='/api/diplom/'+this.number.value; return false">
+                <div class="form-group" style="float:left;margin-right:10px" >
+                    <label class="sr-only" for="exampleInputEmail2">Holdnummer</label>
+                    <input style="width:100px" type="text" class="form-control input-lg" name="number" placeholder="patrulje">
+                </div>
+                <input style="width:100px;margin-left:10px;" type="submit" class="btn btn-success btn-lg btn-block" value="find &raquo;">
+            </form>        <br>
+          <p>Hvis en eller flere deltagere i patruljen har frabedt at få sit billede offentliggjort, bliver patruljen billede ikke vist på diplomet.</p>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+
+  </body>
+  
+</html>

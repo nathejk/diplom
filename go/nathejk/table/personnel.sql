@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS personnel (
+    userId VARCHAR(99) NOT NULL,
+    name VARCHAR(99) NOT NULL DEFAULT "",
+    email VARCHAR(99) NOT NULL DEFAULT "",
+    phone VARCHAR(99) NOT NULL,
+    department VARCHAR(99) NOT NULL DEFAULT "",
+    hqAccess TINYINT NOT NULL DEFAULT 0,
+    medlemNr VARCHAR(99) NOT NULL DEFAULT "",
+    corps VARCHAR(99) NOT NULL DEFAULT "",
+    pincode VARCHAR(9) NOT NULL DEFAULT "",
+    diet VARCHAR(99) NOT NULL DEFAULT "",
+    createdAt VARCHAR(99) NOT NULL,
+    updatedAt VARCHAR(99) NOT NULL,
+    PRIMARY KEY (userId)
+);
